@@ -1,32 +1,31 @@
-import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import React, { useEffect } from 'react';
+// import { initDatabase } from "./services/db-service";
+import { DbContextProvider } from "./context/DbContext";
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Home, AddImage } from "./screens";
+
+const Stack = createStackNavigator();
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+
+  // useEffect(function () {
+  //   async function init() {
+  //     await initDatabase();
+  //   }
+  //   init();
+  // }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <View>
-        <Text>Hello World</Text>
-      </View>
-    </SafeAreaView>
+    <DbContextProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="AddImage" component={AddImage} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </DbContextProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-});
 
 export default App;
